@@ -1,10 +1,8 @@
-from loguru import logger
+from decorator.log import log_decorator
 
 
+@log_decorator
 def soma(x: int, y: int):
-    logger.info(x)
-    logger.info(y)
-    logger.info(x + y)
     return x + y
 
 
