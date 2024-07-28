@@ -23,4 +23,7 @@ def soma(x: int, y: int):
     return x + y
 
 print(soma(2, 3))
-```
+```  
+
+Para não ser necessário colocar essas funções do loguruu dentro de cada função criada, utiliza-se os decoradores para isso.  
+Com isso esse decorador é chamado com o "@", por exemplo "@log_decorator", antes de cada função. Dessa forma a função criada passa pela validação do decorador e salva os log do que foi determinado.
