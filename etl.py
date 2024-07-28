@@ -4,7 +4,10 @@ from pathlib import Path
 
 import pandas as pd
 
+from decorator.log import log_decorator
 
+
+@log_decorator
 def extrair_dados_consolidar(path_pasta_arquivo: Path) -> pd.DataFrame:
     """
     Função para extrair arquivos .json de um diretório específico
@@ -16,6 +19,7 @@ def extrair_dados_consolidar(path_pasta_arquivo: Path) -> pd.DataFrame:
     return dataframe_completo
 
 
+@log_decorator
 def calcular_kpi_total_vendas(dataframe: pd.DataFrame) -> pd.DataFrame:
     """
     Função que calcula a quantidade total de vendas
@@ -25,18 +29,23 @@ def calcular_kpi_total_vendas(dataframe: pd.DataFrame) -> pd.DataFrame:
     return dataframe
 
 
+@log_decorator
 def carregar_dados(dataframe: pd.DataFrame, formato_saida: list):
     """
     Função para carregar dados de acordo com a necessidade. Pode ser 'csv', 'parquet'
     ou os dois.
     """
+    saida = Path("data/transform/dados_agregados")
+    saida.parent.mkdir(parents=True, exist_ok=True)
+
     for formato in formato_saida:
         if formato == "csv":
-            dataframe.to_csv("dados_agregados.csv", index=False)
+            dataframe.to_csv(saida.with_suffix(".csv"), index=False)
         if formato == "parquet":
-            dataframe.to_parquet("dados_agregados.parquet", index=False)
+            dataframe.to_parquet(saida.with_suffix(".parquet"), index=False)
 
 
+@log_decorator
 def pipeline_calcular_kpi_vendas_consolidado(
     caminho_arquivo: Path, formato_saida: list
 ):
